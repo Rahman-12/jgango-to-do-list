@@ -1,0 +1,12 @@
+<h1>HTML WORKING</h1>
+
+
+
+{% for task in tasks %}
+    {% if task.complete %}
+    done
+    {% else%}
+    notDone
+    {% endif %}
+    <p>{{ task.title }}</p>
+{% endfor %}
