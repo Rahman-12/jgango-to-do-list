@@ -18,10 +18,11 @@
             style="display:flex; align-items:center; width:100%;">
             {% csrf_token %}
             <span
-                style="flex:1; font-size:1.1rem;{% if task.complete %} text-decoration:line-through; color:#aaa;{% else %} color:#333;{% endif %}">{{
-                task.title }}</span>
-            <input type="checkbox" name="complete" onchange="this.form.submit()" {% if task.complete %}checked{% endif
-                %} style="margin-left:1rem; width:20px; height:20px;">
+                style="flex:1; font-size:1.1rem;{% if task.complete %} text-decoration:line-through; color:#aaa;{% else %} color:#333;{% endif %}">
+                {{ task.title }}
+            </span>
+            <input type="checkbox" name="complete" onchange="this.form.submit()" {% if task.complete %}checked{% endif %}
+                style="margin-left:1rem; width:20px; height:20px;">
             <span style="margin-left:1rem;">
                 {% if task.complete %}
                 <i class="fa fa-check-circle" style="color:#27ae60;"></i>
