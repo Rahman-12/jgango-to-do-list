@@ -1,12 +1,43 @@
-<h1>HTML WORKING</h1>
+{% extends 'base.html' %}
+{% block content %}
+<h1>My To-Do List</h1>
 
+{% if user.is_authenticated %}
+<form method="post" action="" style="display:flex; gap:10px; margin-bottom:2rem;">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Add new task..." required
+        style="flex:1; padding:0.5rem; border-radius:6px; border:1px solid #fda085;">
+    <button type="submit" class="btn"><i class="fa fa-plus"></i> Add Task</button>
+</form>
 
-
-{% for task in tasks %}
-    {% if task.complete %}
-    done
-    {% else%}
-    notDone
+<ul style="list-style:none; padding:0;">
+    {% if tasks %}
+    {% for task in tasks %}
+    <li
+        style="display:flex; align-items:center; justify-content:space-between; background:#f9f9f9; margin-bottom:1rem; padding:1rem; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+        <form method="post" action="{% url 'toggle_task' task.id %}"
+            style="display:flex; align-items:center; width:100%;">
+            {% csrf_token %}
+            <span
+                style="flex:1; font-size:1.1rem;{% if task.complete %} text-decoration:line-through; color:#aaa;{% else %} color:#333;{% endif %}">{{
+                task.title }}</span>
+            <input type="checkbox" name="complete" onchange="this.form.submit()" {% if task.complete %}checked{% endif
+                %} style="margin-left:1rem; width:20px; height:20px;">
+            <span style="margin-left:1rem;">{% if task.complete %}<i class="fa fa-check-circle"
+                    style="color:#27ae60;"></i>{% else %}<i class="fa fa-circle" style="color:#f76b1c;"></i>{% endif
+                %}</span>
+        </form>
+    </li>
+    {% endfor %}
+    {% else %}
+    <li style="text-align:center; color:#aaa;">No tasks yet. Add your first task!</li>
     {% endif %}
-    <p>{{ task.title }}</p>
-{% endfor %}
+</ul>
+{% else %}
+<div style="text-align:center;">
+    <p><b>Welcome to the To-Do App!</b></p>
+    <p><a href="{% url 'login' %}" class="btn">Sign in</a> or <a href="{% url 'signup' %}" class="btn">Sign up</a> to
+        manage your tasks.</p>
+</div>
+{% endif %}
+{% endblock %}
