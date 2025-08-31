@@ -11,7 +11,6 @@
 </form>
 
 <ul style="list-style:none; padding:0;">
-    {% if tasks %}
     {% for task in tasks %}
     <li
         style="display:flex; align-items:center; justify-content:space-between; background:#f9f9f9; margin-bottom:1rem; padding:1rem; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
@@ -23,15 +22,18 @@
                 task.title }}</span>
             <input type="checkbox" name="complete" onchange="this.form.submit()" {% if task.complete %}checked{% endif
                 %} style="margin-left:1rem; width:20px; height:20px;">
-            <span style="margin-left:1rem;">{% if task.complete %}<i class="fa fa-check-circle"
-                    style="color:#27ae60;"></i>{% else %}<i class="fa fa-circle" style="color:#f76b1c;"></i>{% endif
-                %}</span>
+            <span style="margin-left:1rem;">
+                {% if task.complete %}
+                <i class="fa fa-check-circle" style="color:#27ae60;"></i>
+                {% else %}
+                <i class="fa fa-circle" style="color:#f76b1c;"></i>
+                {% endif %}
+            </span>
         </form>
     </li>
-    {% endfor %}
-    {% else %}
+    {% empty %}
     <li style="text-align:center; color:#aaa;">No tasks yet. Add your first task!</li>
-    {% endif %}
+    {% endfor %}
 </ul>
 {% else %}
 <div style="text-align:center;">
